@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Квиз: Узнайте стоимость ремонта квартиры</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .quiz-container {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    max-width: 600px;
+    width: 100%;
+    padding: 40px;
+    position: relative;
+  }
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .quiz-header h1 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  .quiz-header p {
+    color: #666;
+    font-size: 1em;
+  }
+  .progress-bar {
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+  .step {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+  .step.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .step h2 {
+    font-size: 1.4em;
+    color: #333;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .option {
+    padding: 16px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1em;
+    text-align: center;
+    background: #fff;
+  }
+  .option:hover {
+    border-color: #667eea;
+    background: #f8f9ff;
+    transform: translateX(5px);
+  }
+  .option.selected {
+    border-color: #667eea;
+    background: #667eea;
+    color: #fff;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-group input:focus {
+    border-color: #667eea;
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin-top: 10px;
+  }
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  }
+  .result {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .result h2 {
+    color: #667eea;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  .result p {
+    color: #555;
+    font-size: 1.1em;
+    line-height: 1.6;
+  }
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+  .nav-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: all 0.3s;
+  }
+  .nav-btn.prev {
+    background: #f0f0f0;
+    color: #666;
+  }
+  .nav-btn.prev:hover {
+    background: #e0e0e0;
+  }
+  .nav-btn.next {
+    background: #667eea;
+    color: #fff;
+  }
+  .nav-btn.next:hover {
+    background: #5568d3;
+  }
+  @media (max-width: 600px) {
+    .quiz-container { padding: 25px; }
+    .quiz-header h1 { font-size: 1.4em; }
+    .step h2 { font-size: 1.2em; }
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div class="quiz-header">
+    <h1>🏠 Узнайте стоимость ремонта</h1>
+    <p>Ответьте на 4 вопроса и получите расчёт за 1 минуту</p>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width: 25%"></div>
+  </div>
+
+  <!-- Шаг 1 -->
+  <div class="step active" data-step="1">
+    <h2>Какой тип помещения?</h2>
+    <div class="options">
+      <div class="option" onclick="selectOption(1, 'Квартира')">🏢 Квартира</div>
+      <div class="option" onclick="selectOption(1, 'Дом/Коттедж')">🏡 Дом / Коттедж</div>
+      <div class="option" onclick="selectOption(1, 'Офис')">🏬 Офис</div>
+    </div>
+  </div>
+
+  <!-- Шаг 2 -->
+  <div class="step" data-step="2">
+    <h2>Какая площадь?</h2>
+    <div class="options">
+      <div class="option" onclick="selectOption(2, 'До 40 м²')">📏 До 40 м²</div>
+      <div class="option" onclick="selectOption(2, '40-70 м²')">📐 40–70 м²</div>
+      <div class="option" onclick="selectOption(2, '70-120 м²')">📊 70–120 м²</div>
+      <div class="option" onclick="selectOption(2, 'Более 120 м²')">📈 Более 120 м²</div>
+    </div>
+  </div>
+
+  <!-- Шаг 3 -->
+  <div class="step" data-step="3">
+    <h2>Какой ремонт нужен?</h2>
+    <div class="options">
+      <div class="option" onclick="selectOption(3, 'Косметический')">🎨 Косметический</div>
+      <div class="option" onclick="selectOption(3, 'Капитальный')">🔨 Капитальный</div>
+      <div class="option" onclick="selectOption(3, 'Дизайнерский')">✨ Дизайнерский</div>
+    </div>
+  </div>
+
+  <!-- Шаг 4: Форма контактов -->
+  <div class="step" data-step="4">
+    <h2>Куда отправить расчёт?</h2>
+    <form id="leadForm" onsubmit="submitForm(event)">
+      <div class="form-group">
+        <input type="text" id="name" placeholder="Ваше имя" required>
+      </div>
+      <div class="form-group">
+        <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+      </div>
+      <button type="submit" class="submit-btn"> Получить расчёт</button>
+    </form>
+  </div>
+
+  <!-- Результат -->
+  <div class="step result" data-step="5">
+    <h2>✅ Спасибо!</h2>
+    <p>Ваш расчёт будет готов в течение 30 минут.<br>Наш менеджер свяжется с вами по указанному номеру.</p>
+  </div>
+</div>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 4;
+  const answers = {};
+
+  function selectOption(step, value) {
+    answers[step] = value;
+    
+    // Визуальное выделение
+    const options = document.querySelectorAll(`.step[data-step="${step}"] .option`);
+    options.forEach(opt => opt.classList.remove('selected'));
+    event.target.classList.add('selected');
+    
+    // Переход к следующему шагу через 300мс
+    setTimeout(() => {
+      if (step < totalSteps) {
+        goToStep(step + 1);
+      }
+    }, 300);
+  }
+
+  function goToStep(step) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.querySelector(`.step[data-step="${step}"]`).classList.add('active');
+    currentStep = step;
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const progress = (currentStep / totalSteps) * 100;
+    document.getElementById('progressFill').style.width = progress + '%';
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    
+    // Здесь отправка данных на сервер или в Telegram-бот
+    console.log('Заявка:', { ...answers, name, phone });
+    
+    // Показываем результат
+    goToStep(5);
+    document.querySelector('.progress-bar').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
