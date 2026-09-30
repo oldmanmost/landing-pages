@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentaPro — Современная стоматология</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #333; line-height: 1.6; }
+  .hero { background: linear-gradient(135deg, #0077b6, #00b4d8); color: #fff; padding: 100px 20px; text-align: center; }
+  .hero h1 { font-size: 3em; margin-bottom: 15px; font-weight: 800; }
+  .hero p { font-size: 1.3em; margin-bottom: 30px; opacity: 0.9; }
+  .btn { background: #ff6b35; color: #fff; padding: 16px 40px; border: none; border-radius: 50px; font-size: 1.1em; cursor: pointer; text-decoration: none; display: inline-block; font-weight: 700; transition: 0.3s; }
+  .btn:hover { background: #e55a2b; transform: translateY(-2px); }
+  .section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
+  .section h2 { font-size: 2.2em; margin-bottom: 40px; color: #0077b6; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+  .card { background: #f8f9fa; padding: 35px 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+  .card h3 { color: #0077b6; margin-bottom: 15px; font-size: 1.3em; }
+  .card .price { font-size: 1.4em; font-weight: 700; color: #ff6b35; margin-top: 15px; }
+  .form-section { background: #f0f7ff; padding: 80px 20px; text-align: center; }
+  .form-section form { max-width: 450px; margin: 30px auto; display: flex; flex-direction: column; gap: 15px; }
+  .form-section input { padding: 16px; border: 2px solid #d0e3f0; border-radius: 10px; font-size: 1em; outline: none; transition: 0.3s; }
+  .form-section input:focus { border-color: #0077b6; }
+  footer { background: #1a1a2e; color: #fff; text-align: center; padding: 30px; font-size: 0.9em; opacity: 0.8; }
+  @media (max-width: 600px) { .hero h1 { font-size: 2em; } .hero p { font-size: 1.1em; } }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>🦷 DentaPro</h1>
+  <p>Современная стоматология без боли и стресса.<br>Бесплатная консультация + 3D-план лечения в подарок!</p>
+  <a href="#form" class="btn">Записаться бесплатно</a>
+</section>
+
+<section class="section">
+  <h2>Наши услуги</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>🔬 Диагностика</h3>
+      <p>3D-снимок + подробный осмотр бесплатно при начале лечения</p>
+      <div class="price">от 0 ₽</div>
+    </div>
+    <div class="card">
+      <h3>✨ Отбеливание</h3>
+      <p>ZOOM-отбеливание за 1 визит. Осветление до 8 тонов</p>
+      <div class="price">от 15 000 ₽</div>
+    </div>
+    <div class="card">
+      <h3>🦷 Имплантация</h3>
+      <p>Импланты Nobel, Straumann. Пожизненная гарантия</p>
+      <div class="price">от 35 000 ₽</div>
+    </div>
+  </div>
+</section>
+
+<section class="form-section" id="form">
+  <h2 style="color: #0077b6; font-size: 2.2em;">Запишитесь на бесплатную консультацию</h2>
+  <p style="margin-bottom: 20px; color: #555;">Оставьте номер, и мы перезвоним в течение 15 минут</p>
+  <form onsubmit="event.preventDefault(); alert('✅ Заявка успешно отправлена! Мы скоро свяжемся с вами.');">
+    <input type="text" placeholder="Ваше имя" required>
+    <input type="tel" placeholder="+7 (___) ___-__-__" required>
+    <button class="btn" type="submit" style="width: 100%;">Записаться</button>
+    <small style="color: #888;">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</small>
+  </form>
+</section>
+
+<footer>© 2024 DentaPro | Москва, ул. Примерная, 1 | +7 (999) 123-45-67</footer>
+
+</body>
+</html>
