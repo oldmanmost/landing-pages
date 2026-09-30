@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillUp — Онлайн-школа программирования</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #333; }
+  .hero { background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: #fff; padding: 100px 20px; text-align: center; }
+  .hero h1 { font-size: 3em; margin-bottom: 15px; font-weight: 800; }
+  .hero p { font-size: 1.3em; opacity: 0.9; margin-bottom: 30px; }
+  .btn { background: #fd79a8; color: #fff; padding: 16px 40px; border: none; border-radius: 50px; font-size: 1.1em; cursor: pointer; text-decoration: none; font-weight: 700; transition: 0.3s; display: inline-block; }
+  .btn:hover { background: #e84393; transform: translateY(-2px); }
+  .courses { max-width: 1000px; margin: 60px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+  .course { background: #fff; border-radius: 16px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border-top: 5px solid #6c5ce7; transition: 0.3s; }
+  .course:hover { transform: translateY(-5px); }
+  .course h3 { color: #6c5ce7; margin-bottom: 10px; font-size: 1.3em; }
+  .course .price { font-size: 1.4em; font-weight: 700; color: #fd79a8; margin: 15px 0; }
+  .cta { background: #2d3436; color: #fff; padding: 80px 20px; text-align: center; }
+  .cta h2 { font-size: 2.2em; margin-bottom: 15px; }
+  .cta p { margin-bottom: 30px; opacity: 0.8; font-size: 1.1em; }
+  .cta form { max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+  .cta input { padding: 16px; border: none; border-radius: 10px; font-size: 1em; outline: none; }
+  .cta input:focus { box-shadow: 0 0 0 3px rgba(253, 121, 168, 0.3); }
+  footer { background: #111; color: #888; text-align: center; padding: 30px; font-size: 0.9em; }
+  @media (max-width: 600px) { .hero h1 { font-size: 2em; } }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>🎓 SkillUp</h1>
+  <p>Онлайн-курсы по IT, дизайну и маркетингу.<br>Обучение с ментором + гарантия трудоустройства.</p>
+  <a href="#cta" class="btn">Получить бесплатный урок</a>
+</section>
+
+<div class="courses">
+  <div class="course">
+    <h3>🐍 Python-разработчик</h3>
+    <p>3 месяца, с нуля до Junior. Портфолио из 5 проектов.</p>
+    <div class="price">49 000 ₽</div>
+    <p style="color:#888">или 4 083 ₽/мес в рассрочку</p>
+  </div>
+  <div class="course">
+    <h3>🎨 UX/UI Дизайнер</h3>
+    <p>4 месяца, Figma + реальные кейсы для портфолио.</p>
+    <div class="price">59 000 ₽</div>
+    <p style="color:#888">или 4 917 ₽/мес в рассрочку</p>
+  </div>
+  <div class="course">
+    <h3>📈 Интернет-маркетолог</h3>
+    <p>2 месяца, таргет, контекст и сквозная аналитика.</p>
+    <div class="price">35 000 ₽</div>
+    <p style="color:#888">или 5 833 ₽/мес в рассрочку</p>
+  </div>
+</div>
+
+<section class="cta" id="cta">
+  <h2>Получите бесплатный вводный урок</h2>
+  <p>Наш бот в Telegram подберёт курс и пришлёт доступ за 2 минуты</p>
+  <form id="leadForm">
+    <input type="text" id="name" placeholder="Ваше имя" required>
+    <input type="tel" id="phone" placeholder="Ваш телефон" required>
+    <button class="btn" type="submit" style="width: 100%;">Получить урок в Telegram →</button>
+  </form>
+</section>
+
+<footer>© 2024 SkillUp | Онлайн-школа | Политика конфиденциальности</footer>
+
+<script>
+  document.getElementById('leadForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Отправка...';
+    btn.disabled = true;
+
+    const data = { 
+      name: document.getElementById('name').value, 
+      phone: document.getElementById('phone').value,
+      source: 'landing_skillup'
+    };
+
+    try {
+      // Отправка данных на ваш сервер/вебхук (замените URL на реальный при деплое)
+      await fetch('https://your-server.com/webhook/skillup', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+    } catch (err) {
+      console.log('Webhook error (ожидаемо в демо-режиме):', err);
+    }
+
+    // Перенаправление пользователя в Telegram-бота
+    // Замените 'skillup_bot' на реальный юзернейм вашего бота
+    window.open('https://t.me/skillup_bot?start=free_lesson', '_blank');
+    
+    btn.textContent = '✅ Переходим в Telegram...';
+    setTimeout(() => {
+      alert('Отлично! Бот открылся в новой вкладке. Следуйте инструкциям там.');
+      btn.textContent = 'Получить урок в Telegram →';
+      btn.disabled = false;
+      e.target.reset();
+    }, 1500);
+  });
+</script>
+</body>
+</html>
